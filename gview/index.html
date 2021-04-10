@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var $_GET = (function(){
+    var url = window.document.location.href.toString();
+    var u = url.split("?");
+    if(typeof(u[1]) == "string"){
+        u = u[1].split("&");
+        var get = {};
+        for(var i in u){
+            var j = u[i].split("=");
+            get[j[0]] = j[1];
+        }
+        return get;
+    } else {
+        return {};
+    }
+})();
+
+var point = new Array("1", "2", "3", "4", "5", "6", "7", "8");
+var atction = new Array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20");
+var atctionname = new Array("站立", "走路", "跑步准备", "跑步", "跑步结束", "攻击", "魔法", "投掷", "受伤", "防御", "倒下", "坐下", "招手", "高兴", "生气", "悲伤", "点头", "拳头", "剪刀", "包布");
+var this_point = 5;
+var this_act = 0;
+var metamo = $_GET['m'];
+function changeSrc()
+{
+	document.getElementById("myImage").src="/gview/" + metamo + "/" + atction[this_act] + "_" + point[0] + ".gif";
+}
+
+function myonload(){
+	document.getElementById("myImage").src="/gview/" + metamo + "/" + atction[this_act] + "_" + point[this_point] + ".gif";
+}
+
+function irightchange1()
+{
+	document.getElementById("iright").src="/gview/gright_2.gif";
+}
+function irightchange2()
+{
+	document.getElementById("iright").src="/gview/gright_1.gif";
+}
+
+
+function ileftchange1()
+{
+	document.getElementById("ileft").src="/gview/gleft_2.gif";
+}
+function ileftchange2()
+{
+	document.getElementById("ileft").src="/gview/gleft_1.gif";
+}
+
+function irightchangepoint()
+{
+	this_point --;
+	if(this_point < 0) this_point = 7;
+	document.getElementById("myImage").src="/gview/" + metamo + "/" + atction[this_act] + "_" + point[this_point] + ".gif";
+}
+
+function ileftchangepoint()
+{
+	this_point ++;
+	if(this_point > 7) this_point = 0;
+	document.getElementById("myImage").src="/gview/" + metamo + "/" + atction[this_act] + "_" + point[this_point] + ".gif";
+}
+
+function achange1(n,s)
+{
+	var name = document.getElementById(n).getAttribute('data');
+	var nname = parseInt(name) + 1;
+	document.getElementById(n).src="action/" + nname + ".gif";
+
+	document.getElementById("Tacttile").innerText = atctionname[s];
+	
+}
+
+function achange2(n)
+{
+	var name = document.getElementById(n).getAttribute('data');
+	document.getElementById(n).src="action/" + name + ".gif";
+
+	document.getElementById("Tacttile").innerText = "";
+}
+
+function achangeaction(act)
+{
+	this_act = act;
+	document.getElementById("myImage").src="/gview/" + metamo + "/" + atction[this_act] + "_" + point[this_point] + ".gif";
+}
+
+</script>
+<style type="text/css">
+
+    #Lgright 
+    {
+        position:absolute;
+        width:20px;
+        height:20px;
+        z-index:1;
+        left: 360px;
+        top: 340px;
+     }
+    #Lgleft
+    {
+        position:absolute;
+        width:20px;
+        height:20px;
+        z-index:1;
+        left: 275px;
+        top: 340px;
+     }
+    #Ltile
+    {
+        position:absolute;
+        width:300px;
+        height:20px;
+        z-index:1;
+        left: 30px;
+        top: 20px;
+     }
+    #Lactbg
+    {
+        position:absolute;
+        width:64px;
+        height:260px;
+        z-index:1;
+        left: 560px;
+        top: 50px;
+     }
+
+    #Lacttile
+    {
+        position:absolute;
+        width:40px;
+        height:20px;
+        z-index:1;
+        left: 313px;
+        top: 338px;
+     }
+
+    #Lacta1
+    {
+        position:absolute;
+        width:24px;
+        height:24px;
+        z-index:1;
+        left: 560px;
+       
+     }
+
+    </style>
+</head>
+<body onload="myonload()" oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+<div style="position: relative;">
+<div style="position: absolute;">
+<img id="myImage" border="1" src="" width="640" height="480">
+</div>
+<img id="myImagebg" border="1" src="gbg.png" width="640" height="480">
+</div>
+<div id="Lgleft"  onmouseover="ileftchange1()" onmouseout="ileftchange2()" onclick="ileftchangepoint()">
+<img id="ileft" src="gleft_1.gif"></img>
+</div>
+<div id="Lgright"  onmouseover="irightchange1()" onmouseout="irightchange2()" onclick="irightchangepoint()">
+<img id="iright" src="gright_1.gif"></img>
+</div>
+<div id="Ltile" >
+<font size="2" color="red">GA METAMO VIEWER Ver1.0</font>
+</div>
+
+<div id="Lacttile" >
+<strong><font id="Tacttile" size="2" color="blue"></font></strong>
+</div>
+
+<div id="Lactbg"  >
+<img  src="action/244100.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 75px" onmouseover="achange1('a1',11)" onmouseout="achange2('a1')" onclick="achangeaction(11)">
+<img id="a1" data ="244102" src="action/244102.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 100px" onmouseover="achange1('a2',12)" onmouseout="achange2('a2')" onclick="achangeaction(12)">
+<img id="a2" data ="244105" src="action/244105.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 125px" onmouseover="achange1('a3',16)" onmouseout="achange2('a3')" onclick="achangeaction(16)">
+<img id="a3" data ="244108" src="action/244108.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 150px" onmouseover="achange1('a4',13)" onmouseout="achange2('a4')" onclick="achangeaction(13)">
+<img id="a4" data ="244111" src="action/244111.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 175px" onmouseover="achange1('a5',14)" onmouseout="achange2('a5')" onclick="achangeaction(14)">
+<img id="a5" data ="244114" src="action/244114.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 200px" onmouseover="achange1('a6',15)" onmouseout="achange2('a6')" onclick="achangeaction(15)">
+<img id="a6" data ="244117" src="action/244117.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 225px" onmouseover="achange1('a7',7)" onmouseout="achange2('a7')" onclick="achangeaction(7)">
+<img id="a7" data ="244120" src="action/244120.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 250px" onmouseover="achange1('a8',18)" onmouseout="achange2('a8')" onclick="achangeaction(18)">
+<img id="a8" data ="244123" src="action/244123.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 565px; top: 275px" onmouseover="achange1('a9',19)" onmouseout="achange2('a9')" onclick="achangeaction(19)">
+<img id="a9" data ="244126" src="action/244126.gif"></img>
+</div>
+
+
+
+<div id="Lacta1" style=" left: 589px; top: 75px" onmouseover="achange1('a11',0)" onmouseout="achange2('a11')" onclick="achangeaction(0)">
+<img id="a11" data ="244129" src="action/244129.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 100px" onmouseover="achange1('a12',1)" onmouseout="achange2('a12')" onclick="achangeaction(1)">
+<img id="a12" data ="244132" src="action/244132.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 125px" onmouseover="achange1('a13',10)" onmouseout="achange2('a13')" onclick="achangeaction(10)">
+<img id="a13" data ="244135" src="action/244135.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 150px" onmouseover="achange1('a14',5)" onmouseout="achange2('a14')" onclick="achangeaction(5)">
+<img id="a14" data ="244138" src="action/244138.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 175px" onmouseover="achange1('a15',9)" onmouseout="achange2('a15')" onclick="achangeaction(9)">
+<img id="a15" data ="244141" src="action/244141.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 200px" onmouseover="achange1('a16',8)" onmouseout="achange2('a16')" onclick="achangeaction(8)">
+<img id="a16" data ="244144" src="action/244144.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 225px" onmouseover="achange1('a17',6)" onmouseout="achange2('a17')" onclick="achangeaction(6)">
+<img id="a17" data ="244147" src="action/244147.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 250px" onmouseover="achange1('a18',3)" onmouseout="achange2('a18')" onclick="achangeaction(3)">
+<img id="a18" data ="244150" src="action/244150.gif"></img>
+</div>
+
+<div id="Lacta1" style=" left: 589px; top: 275px" onmouseover="achange1('a19',17)" onmouseout="achange2('a19')" onclick="achangeaction(17)">
+<img id="a19" data ="244153" src="action/244153.gif"></img>
+</div>
+
+
+</body>
+</html>
